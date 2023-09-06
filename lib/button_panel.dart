@@ -13,10 +13,10 @@ class ButtonPanel extends StatelessWidget {
     return Expanded(
       flex: 3,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Expanded(child: fifthRow()),
+          fifthRow(),
           fourthRow(),
           thirdRow(),
           secondRow(),

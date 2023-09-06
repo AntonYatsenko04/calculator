@@ -2,22 +2,26 @@ import 'package:flutter/material.dart';
 import 'button_panel.dart';
 import 'calc_field.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.lime,
-        body: const Center(
+        body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: CalcField(),
-                flex: 1,
+                child: TextField(readOnly: true),
               ),
               ButtonPanel(),
             ],
@@ -26,5 +30,4 @@ class MainScreen extends StatelessWidget {
       ),
     );
   }
-//List<Widget>
 }
