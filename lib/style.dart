@@ -8,7 +8,7 @@ const ButtonTextStyle = TextStyle(
   fontFamily: FontNameDefault,
   fontWeight: FontWeight.w600,
   fontSize: MediumTextSize,
-  color: Colors.white,
+  color: Colors.black,
 );
 
 const NumberFieldTextStyle = TextStyle(
@@ -16,4 +16,11 @@ const NumberFieldTextStyle = TextStyle(
   fontWeight: FontWeight.w600,
   fontSize: LargeTextSize,
   color: Colors.black,
+);
+
+final CalcButtonStyle = ElevatedButton.styleFrom(
+  textStyle: ButtonTextStyle,
+  backgroundColor: Colors.red[400],
+  shape: CircleBorder(),
+  padding: const EdgeInsets.all(20.0),
 );

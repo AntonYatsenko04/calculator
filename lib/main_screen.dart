@@ -1,6 +1,7 @@
+import 'package:calclator/calc_cubit.dart';
+import 'package:calclator/main_view.dart';
 import 'package:flutter/material.dart';
-import 'button_panel.dart';
-import 'calc_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -12,22 +13,9 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.lime,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: TextField(readOnly: true),
-              ),
-              ButtonPanel(),
-            ],
-          ),
-        ),
-      ),
+    return BlocProvider(
+      create: (_) => CalcCubit(),
+      child: MainView(),
     );
   }
 }
