@@ -11,12 +11,18 @@ class CalcCubit extends Cubit<NumberPair> {
 
   void addNumber(int num) {
     if (num > 9 || num < 0) return;
+    double answer;
     if (state.isDouble) {
-      emit(state.copyWith(
-          answer: double.parse(state.answer.toString() + num.toString())));
+      if (state.answer.floorToDouble() == state.answer) {
+        answer = double.parse(
+            '${state.answer.floor().toString()}.${num.toString()}');
+      } else {
+        answer = double.parse(state.answer.toString() + num.toString());
+      }
     } else {
-      emit(state.copyWith(answer: state.answer * 10 + num));
+      answer = state.answer * 10 + num;
     }
+    emit(state.copyWith(answer: answer));
   }
 
   void calculate() {
@@ -48,7 +54,10 @@ class CalcCubit extends Cubit<NumberPair> {
         }
     }
     emit(state.copyWith(
-        first: state.second, second: state.answer, answer: answer));
+        first: state.second,
+        second: state.answer,
+        answer: answer,
+        isDouble: false));
   }
 
   void changeNegation() {
@@ -68,6 +77,7 @@ class CalcCubit extends Cubit<NumberPair> {
         first: state.second,
         second: state.answer,
         answer: 0,
+        isDouble: false,
         operation: operation));
   }
 }

@@ -24,27 +24,46 @@ class MainView extends StatelessWidget {
                     builder: (context, state) {
                   return Column(
                     children: [
-                      Text(
-                        state.first.toString(),
-                        style: textTheme.displayMedium,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            numberToDisplay(state.first),
+                            style: textTheme.displayMedium,
+                          ),
+                          Text(
+                            numberToDisplay(state.second),
+                            style: textTheme.displayMedium,
+                          ),
+                        ],
                       ),
                       Text(
-                        state.second.toString(),
-                        style: textTheme.displayMedium,
-                      ),
-                      Text(
-                        state.answer.toString(),
+                        numberToDisplay(state.answer),
                         style: NumberFieldTextStyle,
                       ),
                     ],
                   );
                 }),
               ),
-              ButtonPanel(),
+              Expanded(flex: 3, child: ButtonPanel()),
             ],
           ),
         ),
       ),
     );
+  }
+
+  String numberToDisplay(double num) {
+    if (num.isInt()) {
+      return num.floor().toString();
+    } else {
+      return num.toString();
+    }
+  }
+}
+
+extension on double {
+  bool isInt() {
+    return this.floorToDouble() == this;
   }
 }
