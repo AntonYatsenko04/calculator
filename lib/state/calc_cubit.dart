@@ -1,8 +1,14 @@
 import 'package:bloc/bloc.dart';
-import 'package:calclator/number_pair.dart';
+import 'number_pair.dart';
+
+class OperationNotChosenException implements Exception {
+  OperationNotChosenException();
+}
 
 class CalcCubit extends Cubit<NumberPair> {
   CalcCubit() : super(const NumberPair(0, 0, 0, false, Operation.none));
+
+  double maxAnswer = double.maxFinite;
 
   void setDouble() {
     if (state.isDouble) return;
@@ -22,10 +28,26 @@ class CalcCubit extends Cubit<NumberPair> {
     } else {
       answer = state.answer * 10 + num;
     }
+    if (answer > maxAnswer) return;
     emit(state.copyWith(answer: answer));
   }
 
-  void calculate() {
+  void setCalculation() {
+    double answer;
+    try {
+      answer = calculate();
+    } catch (e) {
+      answer = state.answer;
+      return;
+    }
+    emit(state.copyWith(
+        first: state.second,
+        second: state.answer,
+        answer: answer,
+        isDouble: false));
+  }
+
+  double calculate() {
     double answer;
     switch (state.operation) {
       case Operation.add:
@@ -50,14 +72,11 @@ class CalcCubit extends Cubit<NumberPair> {
         }
       case Operation.none:
         {
-          return;
+          throw OperationNotChosenException();
         }
     }
-    emit(state.copyWith(
-        first: state.second,
-        second: state.answer,
-        answer: answer,
-        isDouble: false));
+    if (answer > maxAnswer) return state.answer;
+    return answer;
   }
 
   void changeNegation() {
@@ -73,9 +92,15 @@ class CalcCubit extends Cubit<NumberPair> {
   }
 
   void setOperation(Operation operation) {
+    double answer;
+    try {
+      answer = calculate();
+    } catch (e) {
+      answer = state.answer;
+    }
     emit(state.copyWith(
-        first: state.second,
-        second: state.answer,
+        first: 0,
+        second: answer,
         answer: 0,
         isDouble: false,
         operation: operation));

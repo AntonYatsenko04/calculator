@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-const String FontNameDefault = 'Starlight';
+const String FontNameDefault = 'Varela Round';
+const SmallTextSize = 35.0;
 const MediumTextSize = 40.0;
-const LargeTextSize = 40.0;
+const LargeTextSize = 70.0;
 
 const ButtonTextStyle = TextStyle(
   fontFamily: FontNameDefault,
@@ -23,4 +24,11 @@ final CalcButtonStyle = ElevatedButton.styleFrom(
   backgroundColor: Colors.red[400],
   shape: CircleBorder(),
   padding: const EdgeInsets.all(20.0),
+);
+
+final secondaryNumberFieldTextStyle = TextStyle(
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.w300,
+  fontSize: SmallTextSize,
+  color: Colors.black.withOpacity(0.5),
 );
