@@ -22,7 +22,7 @@ const NumberFieldTextStyle = TextStyle(
 final CalcButtonStyle = ElevatedButton.styleFrom(
   textStyle: ButtonTextStyle,
   backgroundColor: Colors.red[400],
-  shape: CircleBorder(),
+  shape: const CircleBorder(),
   padding: const EdgeInsets.all(20.0),
 );
 

@@ -1,5 +1,5 @@
-import 'package:calclator/calc_cubit.dart';
-import 'package:calclator/main_view.dart';
+import '../state/calc_cubit.dart';
+import 'main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,7 +15,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => CalcCubit(),
-      child: MainView(),
+      child: const MainView(),
     );
   }
 }

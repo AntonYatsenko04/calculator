@@ -1,9 +1,10 @@
-import 'package:calclator/number_pair.dart';
-import 'package:calclator/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:calclator/calc_cubit.dart';
-import 'package:calclator/button_panel.dart';
+
+import '../state/calc_cubit.dart';
+import '../state/number_pair.dart';
+import 'button_panel.dart';
+import 'style.dart';
 
 class MainView extends StatelessWidget {
   const MainView({super.key});
@@ -28,26 +29,34 @@ class MainView extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              numberToDisplay(state.first),
-                              style: secondaryNumberFieldTextStyle,
-                            ),
-                            Text(
-                              operationSymbol(state),
-                              style: secondaryNumberFieldTextStyle,
-                            ),
-                            Text(
-                              numberToDisplay(state.second),
-                              style: secondaryNumberFieldTextStyle,
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    '${numberToDisplay(state.first)} ${operationSymbol(state)} ${numberToDisplay(state.second)}',
+                                    style: secondaryNumberFieldTextStyle,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              answerToDisplay(state.answer),
-                              style: NumberFieldTextStyle,
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    answerToDisplay(state.answer),
+                                    style: NumberFieldTextStyle,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -56,11 +65,9 @@ class MainView extends StatelessWidget {
                   ),
                 );
               }),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ButtonPanel(),
-                ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: ButtonPanel(),
               ),
             ],
           ),
@@ -120,6 +127,6 @@ class MainView extends StatelessWidget {
 
 extension on double {
   bool isInt() {
-    return this.floorToDouble() == this;
+    return floorToDouble() == this;
   }
 }

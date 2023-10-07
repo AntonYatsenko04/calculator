@@ -17,6 +17,14 @@ class CalcCubit extends Cubit<NumberPair> {
 
   void addNumber(int num) {
     if (num > 9 || num < 0) return;
+    if (state.first != 0) {
+      emit(state.copyWith(
+          first: 0,
+          second: 0,
+          answer: 0,
+          isDouble: false,
+          operation: Operation.none));
+    }
     double answer;
     if (state.isDouble) {
       if (state.answer.floorToDouble() == state.answer) {
@@ -35,40 +43,45 @@ class CalcCubit extends Cubit<NumberPair> {
   void setCalculation() {
     double answer;
     try {
-      answer = calculate();
+      if (state.first != 0) {
+        answer = calculate(state.answer, state.second);
+        emit(state.copyWith(first: state.answer, answer: answer));
+        return;
+      }
+      answer = calculate(state.second, state.answer);
     } catch (e) {
       answer = state.answer;
       return;
     }
     emit(state.copyWith(
-        first: state.second,
-        second: state.answer,
-        answer: answer,
-        isDouble: false));
+      first: state.second,
+      second: state.answer,
+      answer: answer,
+    ));
   }
 
-  double calculate() {
+  double calculate(double first, double second) {
     double answer;
     switch (state.operation) {
       case Operation.add:
         {
-          answer = state.second + state.answer;
+          answer = first + second;
         }
       case Operation.subtract:
         {
-          answer = state.second - state.answer;
+          answer = first - second;
         }
       case Operation.divide:
         {
-          answer = state.second / state.answer;
+          answer = first / second;
         }
       case Operation.multiply:
         {
-          answer = state.second * state.answer;
+          answer = first * second;
         }
       case Operation.mod:
         {
-          answer = state.second % state.answer;
+          answer = first % second;
         }
       case Operation.none:
         {
@@ -94,7 +107,11 @@ class CalcCubit extends Cubit<NumberPair> {
   void setOperation(Operation operation) {
     double answer;
     try {
-      answer = calculate();
+      if (state.first != 0) {
+        answer = state.answer;
+      } else {
+        answer = calculate(state.second, state.answer);
+      }
     } catch (e) {
       answer = state.answer;
     }
